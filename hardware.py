@@ -50,7 +50,7 @@ class Buttons:
 
 
 def setup_display():
-    i2c = busio.I2C(I2C_SCL, I2C_SDA)
+    i2c = busio.I2C(I2C_SCL, I2C_SDA, frequency=400000)
 
     display = adafruit_ssd1306.SSD1306_I2C(
         DISPLAY_WIDTH, DISPLAY_HEIGHT, i2c, addr=DISPLAY_ADDR
