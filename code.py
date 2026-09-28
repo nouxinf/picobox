@@ -2,6 +2,7 @@ import board
 import busio
 import adafruit_ssd1306
 import os
+import hardware
 
 
 def get_installed_games():
@@ -25,23 +26,13 @@ def get_installed_games():
 installed_games = get_installed_games()
 print(installed_games)
 
-print("Starting")
-
-i2c = busio.I2C(board.GP5, board.GP4)
-print("I2C created")
-
-while not i2c.try_lock():
-    pass
-
-print("Scanning:", i2c.scan())
-
-i2c.unlock()
-
-oled = adafruit_ssd1306.SSD1306_I2C(128, 64, i2c, addr=0x3C)
-print("Display created")
+oled, buttons = hardware.setup()
 
 oled.contrast = 255
-oled.fill(1)
-oled.show()
-
-print("Done")
+selected_game = 0
+while True:
+    oled.fill(0)
+    oled.text("Installed Games:", 0, 0, 1)
+    for i in range(len(installed_games)):
+        oled.text(installed_games[i], 0, (i + 1) * 8, 1)
+    oled.show()

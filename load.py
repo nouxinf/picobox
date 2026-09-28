@@ -5,7 +5,7 @@ import shutil
 SOURCE_DIR = os.path.dirname(os.path.abspath(__file__))
 APP_PATH = "F:/"
 INSTALL_PATH = ""
-FILES_TO_TRANSFER = ["code.py"]
+FILES_TO_TRANSFER = ["code.py", "font5x8.bin", "hardware.py"]
 DIRS_TO_TRANSFER = ["lib", "games"]
 full_install_path = os.path.join(APP_PATH, INSTALL_PATH)
 

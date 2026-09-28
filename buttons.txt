@@ -1,0 +1,9 @@
+button layout
+having pico at bottom of breadboard going down
+up,GP8
+down,GP9
+left,GP6
+right,GP7
+a,GP10
+b,GP11
+start/home,GP12
