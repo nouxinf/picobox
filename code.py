@@ -34,5 +34,10 @@ while True:
     oled.fill(0)
     oled.text("Installed Games:", 0, 0, 1)
     for i in range(len(installed_games)):
-        oled.text(installed_games[i], 0, (i + 1) * 8, 1)
+        if i == selected_game:
+            text_colour = 0
+            oled.fill_rect(0, (i + 1) * 8, 128, 8, 1)
+        else:
+            text_colour = 1
+        oled.text(installed_games[i], 0, (i + 1) * 8, text_colour)
     oled.show()
