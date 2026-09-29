@@ -24,7 +24,16 @@ def get_installed_games():
         return []
 
 
+def load_game(game_name):
+    path = "games/" + game_name + ".py"
+    namespace = {}
+    with open(path) as f:
+        exec(f.read(), namespace)
+    return namespace
+
+
 installed_games = get_installed_games()
+installed_games = sorted(installed_games)
 print(installed_games)
 
 oled, buttons = hardware.setup()
@@ -35,6 +44,7 @@ display_start = 0
 
 prev_down = True
 prev_up = True
+prev_a = True
 dirty = True
 
 currently_displayed = installed_games[:7]
@@ -43,6 +53,7 @@ print(currently_displayed)
 while True:
     curr_down = buttons.down.value
     curr_up = buttons.up.value
+    curr_a = buttons.a.value
     if len(installed_games) > 0:
         if prev_down and not curr_down:
             if selected_game == len(installed_games) - 1:
@@ -60,9 +71,15 @@ while True:
             display_start = selected_game
         elif selected_game >= display_start + 7:
             display_start = selected_game - 7 + 1
+        if prev_a and not curr_a:
+            print("press")
+            game = load_game(installed_games[selected_game])
+            game["run"](oled, buttons)
+            dirty = True
 
     prev_up = curr_up
     prev_down = curr_down
+    prev_a = curr_a
 
     if dirty:
         currently_displayed = installed_games[display_start : display_start + 7]
